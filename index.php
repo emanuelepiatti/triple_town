@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <title>Triple town</title>
     <link rel="stylesheet" type="text/css" media="screen" href="css.css"/>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="triple_town.js"></script>
 </head>
 <body>
 <?php
@@ -60,25 +62,25 @@
 
 
 <script>
-	$("#icon").draggable({
-		revert: 'invalid'
-	});
+$("#icon").draggable({
+    revert: 'invalid'
+});
 
 $(".dropzone").droppable({
-	accept: function (item) {
-		return $(this).data("color") == item.data("color");
-	},
-	drop: function (event, ui) {
-		var $this = $(this);
-		ui.draggable.position({
-			my: "center",
-			at: "center",
-			of: $this,
-			using: function (pos) {
-				$(this).animate(pos, 200, "linear");
-			}
-		});
-	}
+accept: function (item) {
+    return $(this).data("color") == item.data("color");
+},
+drop: function (event, ui) {
+    var $this = $(this);
+    ui.draggable.position({
+        my: "center",
+        at: "center",
+        of: $this,
+        using: function (pos) {
+            $(this).animate(pos, 200, "linear");
+        }
+    }); 
+}
 }); 
 </script>
 
