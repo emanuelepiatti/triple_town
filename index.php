@@ -88,9 +88,7 @@ drop: function (event, ui) {
 }
 }); 
 </script>
-
-
-    
+ 
 </body>
 </html>
 
