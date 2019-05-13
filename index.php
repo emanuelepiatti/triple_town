@@ -11,13 +11,16 @@
 </head>
 <body>
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
     class element {
         private $name;
         private $level;
         private $points;
 
-        public function __construct($name, $level) {
+        public function __construct($name, $level, $points) {
             $this->name = $name;
             $this->level = $level;
             $this->points = $points;
@@ -33,23 +36,19 @@
         }
     }
 
-    $elements_list = array("erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello galleggiante", "castello triplo");
+    $elements_list = array("erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello_galleggiante", "castello_triplo");
+    $elements_objects = array();
+    $level_counter = 1;
+    $points_counter = 10;
 
     foreach ($elements_list as $element){
-        print_r($element);
+        $object_game = new element($element, $level_counter, $points_counter); 
+        array_push($elements_objects, $object_game);
 
+        $level_counter++;
+        $points_counter = $points_counter + 10;
     }
     
-    $erba = new element("erba", 1);
-    $cespuglio = new element("cespuglio", 2);
-    $albero = new element("albero", 3);
-    $capanna = new element("capanna", 4);
-    $casa = new element("casa", 5);
-    $dimora = new element("dimora", 6);
-    $castello = new element("castello", 7);
-    $castello_galleggiante = new element("castello galleggiante", 8);
-    $castello_triplo = new element("castello triplo", 9);
-
 ?>
 
    <table style="width:30%">
