@@ -15,22 +15,31 @@
     class element {
         private $name;
         private $level;
+        private $points;
 
         public function __construct($name, $level) {
             $this->name = $name;
             $this->level = $level;
+            $this->points = $points;
         }
-
         public function get_name() {
             return $this->name;
         }
         public function get_level() {
             return $this->level;
         }
+        public function get_points() {
+            return $this->points;
+        }
     }
 
-    //$elements_list = array("erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello galleggiante", "castello triplo");
+    $elements_list = array("erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello galleggiante", "castello triplo");
 
+    foreach ($elements_list as $element){
+        print_r($element);
+
+    }
+    
     $erba = new element("erba", 1);
     $cespuglio = new element("cespuglio", 2);
     $albero = new element("albero", 3);
@@ -57,9 +66,6 @@
 ?>
 
 <img id="icon" src="icons/albero.png">
-
-
-
 
 <script>
 $("#icon").draggable({
