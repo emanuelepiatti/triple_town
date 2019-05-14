@@ -4,10 +4,8 @@
     <meta charset="utf-8" />
     <title>Triple town</title>
     <link rel="stylesheet" type="text/css" media="screen" href="css.css"/>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="triple_town.js"></script>
 </head>
 <body>
 <?php
@@ -16,15 +14,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-$array_for_session[0][0] = $valore;
-
-for ($i=0; $i < 6; $i++) { 
-    # popolare l array bidimensionale randomicamente se vuoto usare "0"
-}
-
-$_SESSION['grid'] = serialize($array_for_session);
-
-print_r($_SESSION['grid']);
 
     class element {
         private $name;
@@ -54,17 +43,46 @@ print_r($_SESSION['grid']);
         $level_counter++;
     }
 
-    function printTable() {
-    echo "<table style='width:30%'>";
-    for ($row=0; $row < 6 ; $row++) { 
-        echo "<tr>";
-        for ($column = 0; $column  < 6 ; $column++) { 
-            $div_id = $row . "-" .$column; 
-            echo "<td> <div id= $div_id class='dropzone'>
-            </div> </td>";
+    function session_grid_creator($elements_list) {
+        $array_for_session = array();
+
+        for ($x=0; $x < 6; $x++) {
+            for ($y=0; $y < 6; $y++) {
+                $array_for_session[$x][$y] = 0;
+            }
         }
-    echo "</tr>";
+
+        for ($i=0; $i < 5; $i++) {
+            $random_x = rand(0, 5);
+            $random_y = rand(0, 5);
+            $random_element = rand(1, 3);
+            $array_for_session[$random_x][$random_y] = $elements_list[$random_element];
+        }
+
+        $_SESSION['grid'] = serialize($array_for_session);
+        print_r($_SESSION['grid']);
+        
+        
     }
+
+    function printTable() {
+        $grid = unserialize($_SESSION['grid']);
+
+        echo "<table style='width:30%' align='center' valgin'center'>";
+        for ($row=0; $row < 6 ; $row++) { 
+            echo "<tr>";
+            for ($column = 0; $column  < 6 ; $column++) { 
+                $div_id = $row . "-" .$column;
+                if (empty($grid[$row][$column])) {
+                    echo "<td> <div id= $div_id class='dropzone'> </div> </td>";
+                }
+                else {
+                    $image_url = $grid[$row][$column] . ".png";
+                    echo "<td> <div id= $div_id class='dropped centered_image'> <img class = 'centered_image' src='icons/$image_url'> </div> </td>";
+                }    
+            }
+        echo "</tr>";
+        }
     }
     
 ?>
@@ -72,6 +90,7 @@ print_r($_SESSION['grid']);
 <img id="icon" src="icons/albero.png">
 
 <?php
+session_grid_creator($elements_list);
 printTable();
 ?>
 
