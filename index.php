@@ -32,7 +32,7 @@ session_start();
         }
     }
 
-    $elements_list = array("erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello_galleggiante", "castello_triplo");
+    $elements_list = array(1 => "erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello_galleggiante", "castello_triplo");
     $elements_objects = array();
     $level_counter = 1;
 
@@ -53,19 +53,21 @@ session_start();
         }
 
         for ($i=0; $i < 5; $i++) {
-            $random_x = rand(0, 5);
-            $random_y = rand(0, 5);
+
+            do {
+                $random_x = rand(0, 5);
+                $random_y = rand(0, 5);
+                echo $random_x.', '.$random_y.'<br>';
+            } while ($array_for_session[$random_x][$random_y] != 0);
+
             $random_element = rand(1, 3);
-            $array_for_session[$random_x][$random_y] = $elements_list[$random_element];
+            $array_for_session[$random_x][$random_y] = $random_element;
         }
 
-        $_SESSION['grid'] = serialize($array_for_session);
-        print_r($_SESSION['grid']);
-        
-        
+        $_SESSION['grid'] = serialize($array_for_session);   
     }
 
-    function printTable() {
+    function printTable($elements_list) {
         $grid = unserialize($_SESSION['grid']);
 
         echo "<table style='width:30%' align='center' valgin'center'>";
@@ -77,7 +79,7 @@ session_start();
                     echo "<td> <div id= $div_id class='dropzone'> </div> </td>";
                 }
                 else {
-                    $image_url = $grid[$row][$column] . ".png";
+                    $image_url = $elements_list[$grid[$row][$column]] . ".png";
                     echo "<td> <div id= $div_id class='dropped centered_image'> <img class = 'centered_image' src='icons/$image_url'> </div> </td>";
                 }    
             }
@@ -91,7 +93,7 @@ session_start();
 
 <?php
 session_grid_creator($elements_list);
-printTable();
+printTable($elements_list);
 ?>
 
 <script>
@@ -113,6 +115,7 @@ printTable();
                 $(this).animate(pos, 200, "linear");
             }
         }); 
+        document.getElementById('0-0').className = "dropped";
     }
     }); 
 </script>

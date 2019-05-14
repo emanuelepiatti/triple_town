@@ -1,18 +1,18 @@
 .dropzone {
     width: 100px;
     height: 100px;
-    background: rgb(88, 140, 74);
+    background: rgb(118, 126, 108);
     border: solid 1px;
 }
 .dropped {
     width: 100px;
     height: 100px;
-    background: rgb(51, 187, 18);
+    background:rgb(88, 140, 74);
     border: solid 1px;
 }
 .centered_image {
-display: flex;
-  flex-direction: column;
-  justify-content: center;  /* Centering y-axis */
-  align-items :center; /* Centering x-axis */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items :center; 
 }
