@@ -9,6 +9,7 @@
 </head>
 <body>
 <?php
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -18,7 +19,6 @@ session_start();
     class element {
         private $name;
         private $level;
-        private $points;
 
         public function __construct($name, $level) {
             $this->name = $name;
@@ -56,8 +56,7 @@ session_start();
 
             do {
                 $random_x = rand(0, 5);
-                $random_y = rand(0, 5);
-                echo $random_x.', '.$random_y.'<br>';
+                $random_y = rand(0, 5); 
             } while ($array_for_session[$random_x][$random_y] != 0);
 
             $random_element = rand(1, 3);
@@ -86,6 +85,9 @@ session_start();
         echo "</tr>";
         }
     }
+    function prova() {
+        echo("ciaooo");
+    }
     
 ?>
 
@@ -102,22 +104,24 @@ printTable($elements_list);
     });
 
     $(".dropzone").droppable({
-    accept: function (item) {
-        return $(this).data("color") == item.data("color");
-    },
-    drop: function (event, ui) {
-        var $this = $(this);
-        ui.draggable.position({
-            my: "center",
-            at: "center",
-            of: $this,
-            using: function (pos) {
-                $(this).animate(pos, 200, "linear");
-            }
-        }); 
-        document.getElementById('0-0').className = "dropped";
-    }
-    }); 
+        accept: function (item) {
+            return $(this).data("color") == item.data("color");
+        },
+        drop: function (event, ui) {
+            var $this = $(this);
+            var $div_id_dropped = $this[0].id
+            ui.draggable.position({
+                my: "center",
+                at: "center",
+                of: $this,
+                using: function (pos) {
+                    $(this).animate(pos, 200, "linear");
+                }
+            }); 
+            document.getElementById($div_id_dropped).className = "dropped";
+            //rimuovere draggable 
+        }
+    });
 </script>
  
 
@@ -137,7 +141,3 @@ printTable($elements_list);
 9.Logica app per unire eventuali celle
 10.Verifica fine partita altrimenti tornare al punto 4.
 -->
-
-
-
-
