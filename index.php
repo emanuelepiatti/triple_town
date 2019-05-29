@@ -85,17 +85,26 @@ session_start();
         echo "</tr>";
         }
     }
-    function prova() {
-        echo("ciaooo");
+    function session_grid_update() {
+        #TODO aggiornare la griglia in sessione da chiamare a ogni drop
     }
-    
+    function element_generator($elements_objects) {
+        $random = mt_rand(0, 2);
+        $name = $elements_objects[$random]->get_name();
+        echo("<img id='icon' src='icons/$name.png'>");
+    }
+
+    function check() {
+        #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
+    }
 ?>
 
-<img id="icon" src="icons/albero.png">
 
 <?php
 session_grid_creator($elements_list);
 printTable($elements_list);
+element_generator($elements_objects);
+
 ?>
 
 <script>
@@ -119,7 +128,7 @@ printTable($elements_list);
                 }
             }); 
             document.getElementById($div_id_dropped).className = "dropped";
-            //rimuovere draggable 
+            ui.draggable.draggable({disabled: true});
         }
     });
 </script>
