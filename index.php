@@ -97,14 +97,15 @@ session_start();
     function check() {
         #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
     }
-?>
 
-
-<?php
-session_grid_creator($elements_list);
-printTable($elements_list);
-element_generator($elements_objects);
-
+    function game($elements_list,$elements_objects) {
+        session_grid_creator($elements_list);
+        printTable($elements_list);
+        element_generator($elements_objects);
+        
+    }
+    
+game($elements_list,$elements_objects);
 ?>
 
 <script>
