@@ -16,34 +16,49 @@ error_reporting(E_ALL);
 
 session_start();
 
-    class element {
+    class Pawn {
         private $name;
         private $level;
+        private $image_url;
 
         public function __construct($name, $level) {
             $this->name = $name;
             $this->level = $level;
+            $this->image_url = $level . ".png";
         }
+
         public function get_name() {
             return $this->name;
         }
+
         public function get_level() {
             return $this->level;
         }
+
+        public function get_image_url() {
+            return $this->image_url;
+        }
+
+        function check() {
+            #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
+        }
     }
 
-    $elements_list = array(1 => "erba", "cespuglio", "albero", "capanna", "casa", "dimora", "castello", "castello_galleggiante", "castello_triplo");
-    $elements_objects = array();
-    $level_counter = 1;
+    $pawns_array = array();
 
-    foreach ($elements_list as $element){
-        $object_game = new element($element, $level_counter); 
-        array_push($elements_objects, $object_game);
+    $erba = new Pawn("erba", 1);
+    $cespuglio = new Pawn("cespuglio", 2);
+    $albero = new Pawn("albero",3);
+    $capanna = new Pawn("capanna", 4);
+    $casa = new Pawn("casa", 5);
+    $dimora = new Pawn("dimora", 6);
+    $castello = new Pawn("castello", 7);
+    $castello_galleggiante = new Pawn("castello galleggiante", 8);
+    $castello_triplo = new Pawn("castello triplo", 9);
 
-        $level_counter++;
-    }
+    array_push($pawns_array, $erba, $cespuglio, $albero, $capanna, $casa, $dimora, $castello, $castello_galleggiante, $castello_triplo);
 
-    function session_grid_creator($elements_list) {
+    function session_grid_creator() {
         $array_for_session = array();
 
         for ($x=0; $x < 6; $x++) {
@@ -53,7 +68,6 @@ session_start();
         }
 
         for ($i=0; $i < 5; $i++) {
-
             do {
                 $random_x = rand(0, 5);
                 $random_y = rand(0, 5); 
@@ -66,7 +80,7 @@ session_start();
         $_SESSION['grid'] = serialize($array_for_session);   
     }
 
-    function printTable($elements_list) {
+    function printTable($pawns_array) {
         $grid = unserialize($_SESSION['grid']);
 
         echo "<table style='width:30%' align='center' valgin'center'>";
@@ -78,7 +92,7 @@ session_start();
                     echo "<td> <div id= $div_id class='dropzone'> </div> </td>";
                 }
                 else {
-                    $image_url = $elements_list[$grid[$row][$column]] . ".png";
+                    $image_url = $pawns_array[$grid[$row][$column]]->get_image_url();
                     echo "<td> <div id= $div_id class='dropped centered_image'> <img class = 'centered_image' src='icons/$image_url'> </div> </td>";
                 }    
             }
@@ -88,24 +102,17 @@ session_start();
     function session_grid_update() {
         #TODO aggiornare la griglia in sessione da chiamare a ogni drop
     }
-    function element_generator($elements_objects) {
+    function element_generator($pawns_array) {
         $random = mt_rand(0, 2);
-        $name = $elements_objects[$random]->get_name();
+        $name = $pawns_array[$random]->get_level();
         echo("<img id='icon' src='icons/$name.png'>");
     }
 
-    function check() {
-        #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
-    }
-
-    function game($elements_list,$elements_objects) {
-        session_grid_creator($elements_list);
-        printTable($elements_list);
-        element_generator($elements_objects);
-        
-    }
     
-game($elements_list,$elements_objects);
+#GAME TEST    
+session_grid_creator();
+printTable($pawns_array);
+element_generator($pawns_array)
 ?>
 
 <script>
