@@ -101,14 +101,6 @@ session_start();
         echo "</tr>";
         }
     }
-
-    function element_generator($pawns_array) {
-        $random = mt_rand(0, 2);
-        $name = $pawns_array[$random]->get_level();
-        $_SESSION['last_dropped_pawn'] = $name;
-        echo("<img class='icon' id=$name src='icons/$name.png'>");
-    }
-
     
 #GAME TEST    
 session_grid_creator($pawns_array);
@@ -141,12 +133,11 @@ require_once('element_generator.php');
             document.getElementById($div_id_dropped).className = "dropped";
             //ui.draggable.draggable({disabled: true});
 
-            console.log("blyet")
             $.ajax({
                 type: "GET",
                 url: './element_generator.php'
             }).fail(function(data){
-                alert("ue");
+                console.log("fail");
             });
 
 
