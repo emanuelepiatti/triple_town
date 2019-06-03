@@ -64,18 +64,22 @@ session_start();
 
         for ($x=0; $x < 6; $x++) {
             for ($y=0; $y < 6; $y++) {
-                $array_for_session[$x][$y] = 0;
+                $array_for_session[$x][$y] = NULL;
             }
         }
+        print("<pre>");
+        print_r($array_for_session);
+        print("</pre>");
 
         for ($i=0; $i < 5; $i++) {
             do {
                 $random_x = rand(0, 5);
                 $random_y = rand(0, 5); 
-                print($random_x.$random_y);
+                
+                print($random_x. "-". $random_y);
                 print("<br>");
 
-            } while ($array_for_session[$random_x][$random_y] != 0);
+            } while (!is_null($array_for_session[$random_x][$random_y]));
 
             $random_element = rand(0, 2);
             $array_for_session[$random_x][$random_y] = $pawns_array[$random_element];
