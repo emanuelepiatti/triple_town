@@ -67,17 +67,11 @@ session_start();
                 $array_for_session[$x][$y] = NULL;
             }
         }
-        print("<pre>");
-        print_r($array_for_session);
-        print("</pre>");
 
         for ($i=0; $i < 5; $i++) {
             do {
                 $random_x = rand(0, 5);
                 $random_y = rand(0, 5); 
-                
-                print($random_x. "-". $random_y);
-                print("<br>");
 
             } while (!is_null($array_for_session[$random_x][$random_y]));
 
@@ -147,14 +141,14 @@ require_once('element_generator.php');
             document.getElementById($div_id_dropped).className = "dropped";
             //ui.draggable.draggable({disabled: true});
 
-
+            console.log("blyet")
             $.ajax({
-                type: "POST",
-                url: 'element_generator.php',
-                success: function(data){
-                    console.log("ajax element_generator")
-                }
+                type: "GET",
+                url: './element_generator.php'
+            }).fail(function(data){
+                alert("ue");
             });
+
 
         }
     });
