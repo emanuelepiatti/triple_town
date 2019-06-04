@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id='spawn_div'>
-    <h3>spawn: </h3>
+    <h3 id='spawn_title'> spawn: </h3>
 </div>
 
 <script>
@@ -22,6 +22,7 @@ function ajax_call_element_generator() {
             output = data;
         }
     });
+    //icon ui-draggable ui-draggable-handle
     $("#spawn_div").append(output);
 }
 </script>
@@ -108,6 +109,7 @@ ajax_call_element_generator();
 
     $(".dropzone").droppable({
         accept: function (item) {
+            //ajax_call_element_generator(); LOL
             return $(this).data("color") == item.data("color");
         },
         drop: function (event, ui) {
@@ -121,10 +123,12 @@ ajax_call_element_generator();
                     $(this).animate(pos, 200, "linear");
                 }
             }); 
-            document.getElementById($div_id_dropped).className = "dropped";
-            //ui.draggable.draggable({disabled: true});
-
             ajax_call_element_generator();
+            $('.icon').draggable() 
+            document.getElementById($div_id_dropped).className = "dropped";
+            ui.draggable.draggable({disabled: true});
+
+            
             
 
 
