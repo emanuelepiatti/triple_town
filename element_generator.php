@@ -1,12 +1,10 @@
 <?php
-    require_once('index.php');
-    #session_start();
-    $pawns_array = unserialize($_SESSION['pawns_array']);
+    require_once('pawn.php');
+    session_start();
     $random = mt_rand(0, 2);
+    $pawns_array = unserialize($_SESSION['pawns_array']);
     $level = $pawns_array[$random]->get_level();
     $url = $pawns_array[$random]->get_image_url();
     $_SESSION['last_dropped_pawn'] = $level;
-    echo("<img class='icon' id=$level src='icons/$url'>");
-    print($url);
-
-?>
+    echo("<img class='icon' id=$level src='icons/$url'>");    
+?>   

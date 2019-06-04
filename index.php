@@ -8,6 +8,24 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
 <body>
+<div id='spawn_div'>
+    <h3>spawn: </h3>
+</div>
+
+<script>
+function ajax_call_element_generator() {
+    var output = null;
+    $.ajax({
+        async: false,
+        url: "./element_generator.php",
+        success: function(data){
+            output = data;
+        }
+    });
+    $("#spawn_div").append(output);
+}
+</script>
+
 <?php
 
 ini_set('display_errors', 1);
@@ -15,34 +33,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-
-    class Pawn {
-        private $name;
-        private $level;
-        private $image_url;
-
-        public function __construct($name, $level) {
-            $this->name = $name;
-            $this->level = $level;
-            $this->image_url = $level . ".png";
-        }
-
-        public function get_name() {
-            return $this->name;
-        }
-
-        public function get_level() {
-            return $this->level;
-        }
-
-        public function get_image_url() {
-            return $this->image_url;
-        }
-
-        function check() {
-            #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
-        }
-    }
+require_once('pawn.php');
 
     $pawns_array = array();
 
@@ -105,10 +96,10 @@ session_start();
 #GAME TEST    
 session_grid_creator($pawns_array);
 printTable($pawns_array);
-require_once('element_generator.php');
-
-
 ?>
+<script> 
+ajax_call_element_generator(); 
+</script>
 
 <script>    
     $(".icon").draggable({
@@ -133,19 +124,14 @@ require_once('element_generator.php');
             document.getElementById($div_id_dropped).className = "dropped";
             //ui.draggable.draggable({disabled: true});
 
-            $.ajax({
-                type: "GET",
-                url: './element_generator.php'
-            }).fail(function(data){
-                console.log("fail");
-            });
+            ajax_call_element_generator();
+            
 
 
         }
     });
 </script>
  
-
 </body>
 </html>
 
