@@ -20,7 +20,7 @@ function ajax_call_element_generator($div_id_dropped) {
         async: false,
         url: "./element_generator.php",
         success: function(data){
-            console.log("ajax_call_element_generator OK");
+            console.log("element_generator");
             output = data;
         }
     });
@@ -35,17 +35,19 @@ function ajax_call_session_grid_update($div_id_dropped) {
         data: {'coordinate':$div_id_dropped},
         url: "./session_grid_update.php",
         success: function(data){
-            console.log("ajax_call_session_grid_update OK");
+            console.log("session_grid_update");
         }
     });
 }
 
-function ajax_call_checker() {
+function ajax_call_checker($div_id_dropped) {
     $.ajax({
+        type: 'POST',
         async: false,
+        data: {'coordinate':$div_id_dropped},
         url: "./checker.php",
         success: function(data){
-            console.log("ajax_call_checker OK");
+            console.log("call_checker");
         }
     });
 }
@@ -148,13 +150,13 @@ ajax_call_element_generator();
                     $(this).animate(pos, 200, "linear");
                 }
             });
+            console.log("----------------------");
             ui.draggable.draggable({disabled: true});
             document.getElementById($div_id_dropped).className = "dropped";
 
             ajax_call_session_grid_update($div_id_dropped);
-            ajax_call_element_generator();
-            
-            //ajax_call_checker();
+            ajax_call_checker($div_id_dropped);
+            ajax_call_element_generator();   
             
         }
     });
