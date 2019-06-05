@@ -19,12 +19,23 @@ function ajax_call_element_generator() {
         async: false,
         url: "./element_generator.php",
         success: function(data){
+            console.log("ajax_call_element_generator OK");
             output = data;
         }
     });
-    //icon ui-draggable ui-draggable-handle
     $("#spawn_div").append(output);
 }
+
+function ajax_call_session_grid_update() {
+    $.ajax({
+        async: false,
+        url: "./session_grid_update.php",
+        success: function(data){
+            console.log("ajax_call_session_grid_update OK");
+        }
+    });
+}
+
 </script>
 
 <?php
@@ -124,14 +135,10 @@ ajax_call_element_generator();
                 }
             }); 
             ajax_call_element_generator();
+            ajax_call_session_grid_update();
             $('.icon').draggable() 
             document.getElementById($div_id_dropped).className = "dropped";
             ui.draggable.draggable({disabled: true});
-
-            
-            
-
-
         }
     });
 </script>
