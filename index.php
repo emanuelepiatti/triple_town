@@ -81,16 +81,16 @@ require_once('pawn.php');
     function session_grid_creator($pawns_array) {
         $array_for_session = array();
 
-        for ($x=0; $x < 6; $x++) {
-            for ($y=0; $y < 6; $y++) {
+        for ($x=0; $x < 5; $x++) {
+            for ($y=0; $y < 5; $y++) {
                 $array_for_session[$x][$y] = NULL;
             }
         }
 
         for ($i=0; $i < 5; $i++) {
             do {
-                $random_x = rand(0, 5);
-                $random_y = rand(0, 5); 
+                $random_x = rand(0, 4);
+                $random_y = rand(0, 4); 
 
             } while (!is_null($array_for_session[$random_x][$random_y]));
 
@@ -104,10 +104,10 @@ require_once('pawn.php');
     function printTable($pawns_array) {
         $grid = unserialize($_SESSION['grid']);
 
-        echo "<table style='width:30%' align='center' valgin'center'>";
-        for ($row=0; $row < 6 ; $row++) { 
+        echo "<table style='width:20%' align='center' valgin'center'>";
+        for ($row=0; $row < 5 ; $row++) { 
             echo "<tr>";
-            for ($column = 0; $column  < 6 ; $column++) { 
+            for ($column = 0; $column  < 5 ; $column++) { 
                 $div_id = $row . "-" .$column;
                 if (empty($grid[$row][$column])) {
                     echo "<td> <div id= $div_id class='dropzone'> </div> </td>";
