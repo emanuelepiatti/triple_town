@@ -13,9 +13,10 @@
 </div>
 
 <script>
-function ajax_call_element_generator() {
+function ajax_call_element_generator($div_id_dropped) {
     var output = null;
     $.ajax({
+        type: 'GET',
         async: false,
         url: "./element_generator.php",
         success: function(data){
@@ -24,14 +25,27 @@ function ajax_call_element_generator() {
         }
     });
     $("#spawn_div").append(output);
+    $('.icon').draggable()  
 }
 
-function ajax_call_session_grid_update() {
+function ajax_call_session_grid_update($div_id_dropped) {
     $.ajax({
+        type: 'POST',
         async: false,
+        data: {'coordinate':$div_id_dropped},
         url: "./session_grid_update.php",
         success: function(data){
             console.log("ajax_call_session_grid_update OK");
+        }
+    });
+}
+
+function ajax_call_checker() {
+    $.ajax({
+        async: false,
+        url: "./checker.php",
+        success: function(data){
+            console.log("ajax_call_checker OK");
         }
     });
 }
@@ -133,12 +147,15 @@ ajax_call_element_generator();
                 using: function (pos) {
                     $(this).animate(pos, 200, "linear");
                 }
-            }); 
-            ajax_call_element_generator();
-            ajax_call_session_grid_update();
-            $('.icon').draggable() 
-            document.getElementById($div_id_dropped).className = "dropped";
+            });
             ui.draggable.draggable({disabled: true});
+            document.getElementById($div_id_dropped).className = "dropped";
+
+            ajax_call_session_grid_update($div_id_dropped);
+            ajax_call_element_generator();
+            
+            //ajax_call_checker();
+            
         }
     });
 </script>

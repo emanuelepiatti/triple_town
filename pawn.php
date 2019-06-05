@@ -21,9 +21,5 @@ class Pawn {
         public function get_image_url() {
             return $this->image_url;
         }
-
-        function check() {
-            #TODO controllare se ci sono 3 pedine uguali vicine da chiamare a ogni drop
-        }
     }
 ?>
