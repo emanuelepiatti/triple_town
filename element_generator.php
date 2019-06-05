@@ -1,7 +1,7 @@
 <?php
     require_once('pawn.php');
     session_start();
-    $random = mt_rand(0, 2);
+    $random = mt_rand(0, 8);
     $pawns_array = unserialize($_SESSION['pawns_array']);
     $level = $pawns_array[$random]->get_level();
     $url = $pawns_array[$random]->get_image_url();
