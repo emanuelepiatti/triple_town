@@ -75,7 +75,7 @@ require_once('pawn.php');
     $castello_galleggiante = new Pawn("castello galleggiante", 8);
     $castello_triplo = new Pawn("castello triplo", 9);
 
-    array_push($pawns_array, $erba, $cespuglio, $albero, $capanna, $casa, $dimora, $castello, $castello_galleggiante, $castello_triplo);
+    array_push($pawns_array, NULL, $erba, $cespuglio, $albero, $capanna, $casa, $dimora, $castello, $castello_galleggiante, $castello_triplo);
     $_SESSION['pawns_array'] = serialize($pawns_array);
 
     function session_grid_creator($pawns_array) {
@@ -94,7 +94,7 @@ require_once('pawn.php');
 
             } while (!is_null($array_for_session[$random_x][$random_y]));
 
-            $random_element = rand(0, 2);
+            $random_element = rand(1, 2);
             $array_for_session[$random_x][$random_y] = $pawns_array[$random_element];
         }
 
