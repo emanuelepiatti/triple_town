@@ -11,6 +11,5 @@
     $column = $exploded[1];
 
     $grid[$row][$column] = $pawns_array[$last_dropped_pawn];
-
     $_SESSION['grid'] = serialize($grid);
 ?>

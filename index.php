@@ -12,7 +12,25 @@
     <h3 id='spawn_title'> spawn: </h3>
 </div>
 
+<div id='grid_div'>
+</div>
+
 <script>
+
+function ajax_call_print_grid() {
+    var output = null;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: "./print_grid.php",
+        success: function(data){
+            console.log("print_grid");
+            output = data;
+        }
+    });
+    document.getElementById('grid_div').innerHTML = output;
+}
+
 function ajax_call_element_generator($div_id_dropped) {
     var output = null;
     $.ajax({
@@ -100,32 +118,13 @@ require_once('pawn.php');
 
         $_SESSION['grid'] = serialize($array_for_session);   
     }
-
-    function printTable($pawns_array) {
-        $grid = unserialize($_SESSION['grid']);
-
-        echo "<table style='width:20%' align='center' valgin'center'>";
-        for ($row=0; $row < 5 ; $row++) { 
-            echo "<tr>";
-            for ($column = 0; $column  < 5 ; $column++) { 
-                $div_id = $row . "-" .$column;
-                if (empty($grid[$row][$column])) {
-                    echo "<td> <div id= $div_id class='dropzone'> </div> </td>";
-                }
-                else {
-                    $image_url = $grid[$row][$column]->get_image_url();
-                    echo "<td> <div id= $div_id class='dropped centered_image'> <img class = 'centered_image' src='icons/$image_url'> </div> </td>";
-                }    
-            }
-        echo "</tr>";
-        }
-    }
     
 #GAME TEST    
 session_grid_creator($pawns_array);
-printTable($pawns_array);
+
 ?>
 <script> 
+ajax_call_print_grid();
 ajax_call_element_generator(); 
 </script>
 
@@ -136,7 +135,6 @@ ajax_call_element_generator();
 
     $(".dropzone").droppable({
         accept: function (item) {
-            //ajax_call_element_generator(); LOL
             return $(this).data("color") == item.data("color");
         },
         drop: function (event, ui) {
@@ -151,11 +149,12 @@ ajax_call_element_generator();
                 }
             });
             console.log("----------------------");
-            ui.draggable.draggable({disabled: true});
+            //ui.draggable.draggable({disabled: true});
             document.getElementById($div_id_dropped).className = "dropped";
 
             ajax_call_session_grid_update($div_id_dropped);
             ajax_call_checker($div_id_dropped);
+            ajax_call_print_grid();
             ajax_call_element_generator();   
             
         }
