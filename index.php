@@ -29,6 +29,32 @@ function ajax_call_print_grid() {
         }
     });
     document.getElementById('grid_div').innerHTML = output;
+    $(".dropzone").droppable({
+        accept: function (item) {
+            return $(this).data("color") == item.data("color");
+        },
+        drop: function (event, ui) {
+            console.log("dropped");
+            var $this = $(this);
+            var $div_id_dropped = $this[0].id
+            ui.draggable.position({
+                my: "center",
+                at: "center",
+                of: $this,
+                using: function (pos) {
+                    $(this).animate(pos, 200, "linear");
+                }
+            });
+            console.log("----------------------");
+            document.getElementById($div_id_dropped).className = "dropped";          
+            ajax_call_session_grid_update($div_id_dropped);
+            ajax_call_checker($div_id_dropped);
+            document.getElementById("spawn_div").innerHTML = "";
+            ajax_call_print_grid();
+            ajax_call_element_generator();   
+            
+        }
+    });
 }
 
 function ajax_call_element_generator($div_id_dropped) {
@@ -138,6 +164,7 @@ ajax_call_element_generator();
             return $(this).data("color") == item.data("color");
         },
         drop: function (event, ui) {
+            console.log("dropped");
             var $this = $(this);
             var $div_id_dropped = $this[0].id
             ui.draggable.position({
@@ -149,18 +176,17 @@ ajax_call_element_generator();
                 }
             });
             console.log("----------------------");
-            //ui.draggable.draggable({disabled: true});
-            document.getElementById($div_id_dropped).className = "dropped";
-
+            document.getElementById($div_id_dropped).className = "dropped";          
             ajax_call_session_grid_update($div_id_dropped);
             ajax_call_checker($div_id_dropped);
+            document.getElementById("spawn_div").innerHTML = "";
             ajax_call_print_grid();
             ajax_call_element_generator();   
             
         }
     });
 </script>
- 
+
 </body>
 </html>
 
