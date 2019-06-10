@@ -155,8 +155,9 @@
                             }
                         });
                         alert("Griglia piena, partita terminata ->" + points + "punti");
-                        location.reload();
                         <?php $_SESSION['points'] = 0; ?>
+                        location.reload();
+                        
                     }
                 }
             });
