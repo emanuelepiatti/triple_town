@@ -7,199 +7,206 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 </head>
+
 <body>
-<div id='spawn_div'>
-    <h3 id='spawn_title'> spawn: </h3>
-</div>
-
-<div id='grid_div'>
-</div>
-
-<script>
-
-function ajax_call_print_grid() {
-    var output = null;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        url: "./print_grid.php",
-        success: function(data){
-            console.log("print_grid");
-            output = data;
-        }
-    });
-    document.getElementById('grid_div').innerHTML = output;
-    $(".dropzone").droppable({
-        accept: function (item) {
-            return $(this).data("color") == item.data("color");
-        },
-        drop: function (event, ui) {
-            console.log("dropped");
-            var $this = $(this);
-            var $div_id_dropped = $this[0].id
-            ui.draggable.position({
-                my: "center",
-                at: "center",
-                of: $this,
-                using: function (pos) {
-                    $(this).animate(pos, 200, "linear");
-                }
-            });
-            console.log("----------------------");
-            document.getElementById($div_id_dropped).className = "dropped";          
-            ajax_call_session_grid_update($div_id_dropped);
-            ajax_call_checker($div_id_dropped);
-            document.getElementById("spawn_div").innerHTML = "";
-            ajax_call_print_grid();
-            ajax_call_element_generator();   
-            
-        }
-    });
-}
-
-function ajax_call_element_generator($div_id_dropped) {
-    var output = null;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        url: "./element_generator.php",
-        success: function(data){
-            console.log("element_generator");
-            output = data;
-        }
-    });
-    $("#spawn_div").append(output);
-    $('.icon').draggable()  
-}
-
-function ajax_call_session_grid_update($div_id_dropped) {
-    $.ajax({
-        type: 'POST',
-        async: false,
-        data: {'coordinate':$div_id_dropped},
-        url: "./session_grid_update.php",
-        success: function(data){
-            console.log("session_grid_update");
-        }
-    });
-}
-
-function ajax_call_checker($div_id_dropped) {
-    $.ajax({
-        type: 'POST',
-        async: false,
-        data: {'coordinate':$div_id_dropped},
-        url: "./checker.php",
-        success: function(data){
-            console.log("call_checker");
-        }
-    });
-}
-
-</script>
-
-<?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-session_start();
-require_once('pawn.php');
-
-    $pawns_array = array();
-
-    $erba = new Pawn("erba", 1);
-    $cespuglio = new Pawn("cespuglio", 2);
-    $albero = new Pawn("albero",3);
-    $capanna = new Pawn("capanna", 4);
-    $casa = new Pawn("casa", 5);
-    $dimora = new Pawn("dimora", 6);
-    $castello = new Pawn("castello", 7);
-    $castello_galleggiante = new Pawn("castello galleggiante", 8);
-    $castello_triplo = new Pawn("castello triplo", 9);
-
-    array_push($pawns_array, NULL, $erba, $cespuglio, $albero, $capanna, $casa, $dimora, $castello, $castello_galleggiante, $castello_triplo);
-    $_SESSION['pawns_array'] = serialize($pawns_array);
-
-    function session_grid_creator($pawns_array) {
-        $array_for_session = array();
-
-        for ($x=0; $x < 5; $x++) {
-            for ($y=0; $y < 5; $y++) {
-                $array_for_session[$x][$y] = NULL;
-            }
-        }
-
-        for ($i=0; $i < 5; $i++) {
-            do {
-                $random_x = rand(0, 4);
-                $random_y = rand(0, 4); 
-
-            } while (!is_null($array_for_session[$random_x][$random_y]));
-
-            $random_element = rand(1, 2);
-            $array_for_session[$random_x][$random_y] = $pawns_array[$random_element];
-        }
-
-        $_SESSION['grid'] = serialize($array_for_session);   
-    }
+   
+    <div id='title'> 
+        <h1>Triple Town</h1>
+        <h3>by Emanuele Piatti</h3>
+    </div>
+    <div id='spawn_div'> </div>
+    <div id='point_div'> 
+        <h2>Points:</h2>
+        <h2 id='points'> 0 </h2>
+    </div>
+    <div id='grid_div'> </div>
     
-#GAME TEST    
-session_grid_creator($pawns_array);
 
-?>
-<script> 
-ajax_call_print_grid();
-ajax_call_element_generator(); 
-</script>
+    <script>
 
-<script>    
-    $(".icon").draggable({
-        revert: 'invalid'
-    });
-
-    $(".dropzone").droppable({
-        accept: function (item) {
-            return $(this).data("color") == item.data("color");
-        },
-        drop: function (event, ui) {
-            console.log("dropped");
-            var $this = $(this);
-            var $div_id_dropped = $this[0].id
-            ui.draggable.position({
-                my: "center",
-                at: "center",
-                of: $this,
-                using: function (pos) {
-                    $(this).animate(pos, 200, "linear");
+        function ajax_call_pawns_array_creator() {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./pawns_array_creator.php",
+                success: function(data){
                 }
             });
-            console.log("----------------------");
-            document.getElementById($div_id_dropped).className = "dropped";          
-            ajax_call_session_grid_update($div_id_dropped);
-            ajax_call_checker($div_id_dropped);
-            document.getElementById("spawn_div").innerHTML = "";
-            ajax_call_print_grid();
-            ajax_call_element_generator();   
-            
         }
-    });
-</script>
+
+        function ajax_call_get_points() {
+            var points = null;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./get_points.php",
+                success: function(data){
+                    points = data;
+                    document.getElementById("points").innerHTML = points;
+                }
+            });
+        }
+
+        function ajax_call_session_grid_creator() {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./session_grid_creator.php",
+                success: function(data){
+                }
+            });
+        }
+
+        function ajax_call_print_grid() {
+            var output = null;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./print_grid.php",
+                success: function(data){
+                    output = data;
+                }
+            });
+            document.getElementById('grid_div').innerHTML = output;
+            $(".dropzone").droppable({
+                accept: function (item) {
+                    return $(this).data("color") == item.data("color");
+                },
+                drop: function (event, ui) {
+                    var $this = $(this);
+                    var $div_id_dropped = $this[0].id
+                    ui.draggable.position({
+                        my: "center",
+                        at: "center",
+                        of: $this,
+                        using: function (pos) {
+                            $(this).animate(pos, 200, "linear");
+                        }
+                    });
+                    document.getElementById($div_id_dropped).className = "dropped";          
+                    ajax_call_session_grid_update($div_id_dropped);
+                    ajax_call_checker($div_id_dropped);
+                    document.getElementById("spawn_div").innerHTML = "";
+                    ajax_call_print_grid();
+                    ajax_call_get_points();
+                    ajax_call_check_end_game();
+                    ajax_call_element_generator();   
+                    
+                }
+            });
+        }
+
+        function ajax_call_element_generator($div_id_dropped) {
+            var output = null;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./element_generator.php",
+                success: function(data){
+                    output = data;
+                }
+            });
+            $("#spawn_div").append(output);
+            $('.icon').draggable()  
+        }
+
+        function ajax_call_session_grid_update($div_id_dropped) {
+            $.ajax({
+                type: 'POST',
+                async: false,
+                data: {'coordinate':$div_id_dropped},
+                url: "./session_grid_update.php",
+                success: function(data){
+                }
+            });
+        }
+
+        function ajax_call_checker($div_id_dropped) {
+            $.ajax({
+                type: 'POST',
+                async: false,
+                data: {'coordinate':$div_id_dropped},
+                url: "./checker.php",
+                success: function(data){
+                    if (data) {
+                        ajax_call_checker($div_id_dropped);
+                        
+                    }
+                }
+            });
+        }
+
+        function ajax_call_check_end_game() {
+            $.ajax({
+                type: 'GET',
+                async: false,
+                url: "./check_end_game.php",
+                success: function(data){
+                    if (data) {
+                        var points = null;
+                        $.ajax({
+                            type: 'GET',
+                            async: false,
+                            url: "./get_points.php",
+                            success: function(data){
+                                points = data;
+                            }
+                        });
+                        alert("Griglia piena, partita terminata ->" + points + "punti");
+                        location.reload();
+                        <?php $_SESSION['points'] = 0; ?>
+                    }
+                }
+            });
+        }
+    </script>
+
+    <?php
+    $_SESSION['points'] = 0;
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+    ?>
+
+    <script> 
+        ajax_call_pawns_array_creator();
+        ajax_call_session_grid_creator();
+        ajax_call_print_grid();
+        ajax_call_element_generator(); 
+
+
+        //Draggable and droppable part
+
+            $(".icon").draggable({
+                revert: 'invalid'
+            });
+
+            $(".dropzone").droppable({
+                accept: function (item) {
+                    return $(this).data("color") == item.data("color");
+                },
+                drop: function (event, ui) {
+                    var $this = $(this);
+                    var $div_id_dropped = $this[0].id
+                    ui.draggable.position({
+                        my: "center",
+                        at: "center",
+                        of: $this,
+                        using: function (pos) {
+                            $(this).animate(pos, 200, "linear");
+                        }
+                    });
+                    document.getElementById($div_id_dropped).className = "dropped";          
+                    ajax_call_session_grid_update($div_id_dropped);
+                    ajax_call_checker($div_id_dropped);
+                    document.getElementById("spawn_div").innerHTML = "";
+                    ajax_call_print_grid();
+                    ajax_call_get_points();
+                    ajax_call_element_generator();   
+                    
+                }
+            });
+    </script>
 
 </body>
 </html>
-
-<!-- TODO
-1.Matrice 6x6
-2.Creare elenco degli oggetti in Array(cespuglio ecc..)
-3.Popolare matrice random (5 elementi)
-4.Salvare matrice in sessione (serializzare)
-5.Ricaricare la matrice dalla sessione
-6.Attivare singole celle vuote al click (Link, bottoni o altro)
-7.Visualizzare matrice
-8.Generare elemento casuale da posizionare
-8.Gestire il click sulla cella e posizionare l'elemento
-9.Logica app per unire eventuali celle
-10.Verifica fine partita altrimenti tornare al punto 4.
--->

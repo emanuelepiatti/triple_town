@@ -10,6 +10,8 @@
     $x = $exploded[0];
     $y = $exploded[1];
 
+    $flag = FALSE;
+
     $old_x = $x;
     $old_y = $y;
     $pawn_around_counter = array();
@@ -23,7 +25,12 @@
                     $near_pawn_level = $near_pawn->get_level();
                     $near_pawn_name = $near_pawn->get_name();
                     $pawn_around_counter[$near_pawn_name]["level"] = $near_pawn_level;
-                    $pawn_around_counter[$near_pawn_name]["quantity"] = $pawn_around_counter[$near_pawn_name]["quantity"] + 1;
+
+                    if (!empty($pawn_around_counter[$near_pawn_name]["quantity"])) {
+                        $pawn_around_counter[$near_pawn_name]["quantity"] = $pawn_around_counter[$near_pawn_name]["quantity"] + 1;    }
+                    else {
+                        $pawn_around_counter[$near_pawn_name]["quantity"] = 1;
+                    }
                     $pawn_around_counter[$near_pawn_name]["coordinate"][] = $row."-".$column;
                     
                 }
@@ -33,6 +40,8 @@
 
     foreach ($pawn_around_counter as $pawn) {
         if ( ($pawn["quantity"] >= 3) && ($pawn["level"] == $last_dropped_pawn) ) {
+            $_SESSION['points'] = $_SESSION['points'] + 30;
+            $flag = TRUE;
             foreach ($pawn["coordinate"] as $coordinata) {
                 $exploded = explode("-", $coordinata);
                 $pawn_x = $exploded[0];
@@ -51,4 +60,5 @@
     }
     $_SESSION['grid'] = serialize($grid);
 
+    print($flag);
 ?>

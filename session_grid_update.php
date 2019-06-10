@@ -12,4 +12,9 @@
 
     $grid[$row][$column] = $pawns_array[$last_dropped_pawn];
     $_SESSION['grid'] = serialize($grid);
+    print_r($pawns_array[$last_dropped_pawn]);
+    //print("point".$pawns_array[$last_dropped_pawn]->get_points());
+
+    $_SESSION['points'] = $_SESSION['points'] + $pawns_array[$last_dropped_pawn]->get_points();
+
 ?>

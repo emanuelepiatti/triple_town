@@ -14,16 +14,48 @@
     display: flex;
     flex-direction: column;
     justify-content: center;  
-    align-items :center; 
+    align-items: center; 
 }
-#spawn_div {
-    width: 100px;
-    height: 100px;
-    background-color: red; 
+
+.icon {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-#spawn_title{
+#title {
+    width: 300px;
+    height: 150px;
+    margin:0 auto;
+}
+h1 {
+    text-align: center;
+    font-size: 50px;
+}
+h2 {
     text-align: center;
 }
+h3 {
+    text-align: center;
+}
+#spawn_div {
+    border-radius: 25px;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(0, 204, 102);
+    position: absolute;
+
+}
+#point_div{
+    border-radius: 25px;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(146, 141, 141);
+    position: absolute;
+    top: 10px;
+
+}
+
 #grid_div {
     width: 600px;
     height: 600px;
