@@ -16,6 +16,4 @@
 
     array_push($pawns_array, NULL, $erba, $cespuglio, $albero, $capanna, $casa, $dimora, $castello, $castello_galleggiante, $castello_triplo);
     $_SESSION['pawns_array'] = serialize($pawns_array);
-
-    print_r($_SESSION['pawns_array']);
 ?>

@@ -27,7 +27,8 @@
                     $pawn_around_counter[$near_pawn_name]["level"] = $near_pawn_level;
 
                     if (!empty($pawn_around_counter[$near_pawn_name]["quantity"])) {
-                        $pawn_around_counter[$near_pawn_name]["quantity"] = $pawn_around_counter[$near_pawn_name]["quantity"] + 1;    }
+                        $pawn_around_counter[$near_pawn_name]["quantity"] = $pawn_around_counter[$near_pawn_name]["quantity"] + 1;    
+                    }
                     else {
                         $pawn_around_counter[$near_pawn_name]["quantity"] = 1;
                     }
@@ -59,6 +60,5 @@
         }
     }
     $_SESSION['grid'] = serialize($grid);
-
     print($flag);
 ?>

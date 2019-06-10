@@ -105,7 +105,7 @@ session_start();
         
     }
     
-game($elements_list,$elements_objects);
+    game($elements_list,$elements_objects);
 ?>
 
 <script>

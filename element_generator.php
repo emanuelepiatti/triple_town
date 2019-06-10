@@ -7,5 +7,4 @@
     $url = $pawns_array[$random]->get_image_url();
     $_SESSION['last_dropped_pawn'] = $level;
     echo("<img class='icon' id=$level src='icons/$url'>");
-
 ?>   

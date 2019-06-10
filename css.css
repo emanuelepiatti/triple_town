@@ -1,15 +1,17 @@
 .dropzone {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     background: rgb(118, 126, 108);
     border: solid 1px;
 }
+
 .dropped {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     background:rgb(88, 140, 74);
     border: solid 1px;
 }
+
 .centered_image {
     display: flex;
     flex-direction: column;
@@ -28,16 +30,20 @@
     height: 150px;
     margin:0 auto;
 }
+
 h1 {
     text-align: center;
     font-size: 50px;
 }
+
 h2 {
     text-align: center;
 }
+
 h3 {
     text-align: center;
 }
+
 #spawn_div {
     border-radius: 25px;
     width: 150px;
@@ -46,6 +52,7 @@ h3 {
     position: absolute;
 
 }
+
 #point_div{
     border-radius: 25px;
     width: 150px;
@@ -53,7 +60,6 @@ h3 {
     background-color: rgb(146, 141, 141);
     position: absolute;
     top: 10px;
-
 }
 
 #grid_div {
@@ -61,6 +67,7 @@ h3 {
     height: 600px;
     margin:0 auto;
 }
+
 #table {
     margin:0 auto;
     width: 100%;
