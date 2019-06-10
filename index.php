@@ -107,7 +107,9 @@
                 }
             });
             $("#spawn_div").append(output);
-            $('.icon').draggable()  
+            $(".icon").draggable({
+                revert: 'invalid'
+            });  
         }
 
         function ajax_call_session_grid_update($div_id_dropped) {
