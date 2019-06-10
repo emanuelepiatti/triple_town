@@ -143,14 +143,14 @@
                 type: 'GET',
                 async: false,
                 url: "./check_end_game.php",
-                success: function(data){
+                success: function(data) {
                     if (data) {
                         var points = null;
                         $.ajax({
                             type: 'GET',
                             async: false,
                             url: "./get_points.php",
-                            success: function(data){
+                            success: function(data) {
                                 points = data;
                             }
                         });
